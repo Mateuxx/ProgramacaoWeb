@@ -54,8 +54,8 @@ class IntergetSet {
 
 
 
-const set1 = new IntegerSet(10);
-const set2 = new IntegerSet(10);
+const set1 = new IntergetSet(10);
+const set2 = new IntergetSet(10);
 
 set1.insert(1);
 set1.insert(3);
