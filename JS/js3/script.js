@@ -26,7 +26,7 @@ class IntergetSet {
     }
 
     intersection(otherSet) {
-        const newSet = new IntegerSet(this.maxValue);
+        const newSet = new IntergetSet(this.maxValue);
         for (let i = 0; i <= this.maxValue; i++) {
           newSet.set[i] = this.set[i] && otherSet.set[i];
         }
@@ -34,7 +34,7 @@ class IntergetSet {
       }
 
     difference(otherSet) {
-        const newSet = new IntegerSet(this.maxValue);
+        const newSet = new IntergetSet(this.maxValue);
         for (let i = 0; i <= this.maxValue; i++) {
         newSet.set[i] = this.set[i] && !otherSet.set[i];
         }
