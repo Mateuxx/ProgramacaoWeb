@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfico de Barras</title>
+    <style>
+        .bar {
+            display: inline-block;
+            margin-right: 5px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Um Gráfico de Barras</h1>
+    <div>
+        <label for="heights">Informe a altura das barras:</label>
+        <input type="text" id="heights" placeholder="100 150 120 80 40">
+    </div>
+    <div>
+        <label for="width">Informe a largura das barras:</label>
+        <input type="number" id="width" placeholder="30">
+    </div>
+    <button onclick="drawChart()">Desenhar o gráfico</button>
+    <div id="chart"></div>
+
+    <script>
+        function drawChart() {
+            const heightsInput = document.getElementById('heights').value;
+            const width = document.getElementById('width').value;
+
+            const heights = heightsInput.split(' ').map(Number);
+            const chart = document.getElementById('chart');
+
+            // Limpa o gráfico anterior
+            chart.innerHTML = '';
+
+            // Cria novas barras
+            heights.forEach(height => {
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = height + 'px';
+                bar.style.width = width + 'px';
+                chart.appendChild(bar);
+            });
+        }
+    </script>
+</body>
+</html>
