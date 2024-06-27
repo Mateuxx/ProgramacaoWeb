@@ -12,4 +12,21 @@ class Circulo {
         return this.circunferencia;
     }
 }
-//cotinuar daqui
+const calcularBtn = document.getElementById('calcularBtn');
+if (calcularBtn) {
+    calcularBtn.onclick = () => {
+        const raioInput = document.getElementById("raioInput").value;
+        const raio = parseFloat(raioInput);
+        console.log(raio);
+        if (!isNaN(raio)) {
+            let circle = new Circulo(raio);
+            let calculoArea = circle.getArea().toFixed(2);
+            let circunferencia = circle.getCircun().toFixed(2);
+            document.getElementById("area").value = calculoArea;
+            document.getElementById("circunferencia").value = circunferencia;
+        }
+        else {
+            console.error("Por favor, insira um valor válido para o raio.");
+        }
+    };
+}
