@@ -9,7 +9,10 @@
   let comecarJogo = false
   let jogoPausado = false
   let gameOver = false
-
+  let gameOverMsg
+  let resetGame = false
+  let alimentosConsumidos = 0
+  let intervalo
   let cor
 
   
@@ -18,19 +21,45 @@
   //Pressionar S para começar o jogo
   function pressS(callback) {
     window.addEventListener("keydown", function(event) {
-      if (event.key === "s" && !comecarJogo) {
+      if (event.key === "s") {
         console.log("s -> começar jogo");
-        gameStarted = true;
-        callback();
+        if (gameOver) {
+          clearInterval(intervalo)
+          reset(); // Reiniciar o jogo se gameOver for true
+        } else if (!comecarJogo) {
+          gameStarted = true;
+          callback();
+        }
       }
     });
   }
 
+
+  //Tratar o fim de jogo
   function fimDeJogo() {
     gameOver = true
     console.log("GAME OVER")
+    gameOverMsg.mostraTexto() //Mostrar apenas no fim de jogo
     clearInterval(cobrinhaStuff)
   }
+
+
+  //Resetar o game 
+  function reset() {
+    placar.reset(); // placar resetado
+    snake.reset(); // cobrinha com as config iniciais
+    board.clear(); // limpar o board 
+    gameOverMsg.esconderTexto(); // esconder de novo o fim de jogo
+    alimento = new Alimento(snake);
+  
+    jogoPausado = false;
+    gameOver = false;
+    alimentosConsumidos = 0;
+    FPS = 10; // Resetar a velocidade para o valor inicial
+    clearInterval(intervalo); // Parar o intervalo anterior, se houver
+    intervalo = setInterval(cobrinhaStuff, 1000 / FPS); // Iniciar o intervalo novamente
+  }
+  
 
 
 //Pressionar S para começar o jogo
@@ -53,21 +82,21 @@ function pausar() {
 }
 
 
-  function init() {
-    placar = new Placar(); // Inicializa o placar
-    gameOver = new EsreverFimDeJogo()
-    board = new Board(SIZE);
-    snake = new Snake([[4, 4], [4, 5], [4, 6]])
-    alimento = new Alimento(snake)
-    
-    pressS(() => {
-      setInterval(cobrinhaStuff,countInicioDoGame)
-      console.log(countInicioDoGame)
-      pausar()
-    })
+function init() {
+  placar = new Placar(); // Inicializa o placar
+  gameOverMsg = new EsreverFimDeJogo();
+  board = new Board(SIZE);
+  snake = new Snake([[4, 4], [4, 5], [4, 6]]);
+  alimento = new Alimento(snake);
+  pressS(() => {
+    resetGame = false;
+    clearInterval(intervalo); // Garantir que qualquer intervalo anterior seja limpo
+    intervalo = setInterval(cobrinhaStuff, 1000 / FPS); // Iniciar o intervalo corretamente
+    console.log(countInicioDoGame);
+    pausar();
+  });
+}
 
-
-  }
 
   //Controla o moviemnto da cobrinha
   window.addEventListener("keydown", (e) => {
@@ -118,25 +147,35 @@ function pausar() {
     atualizaPontos() {
       this.element.innerText = ` ${this.pontos.toString().padStart(4, '0')}`;
     }
+
+    reset() {
+      this.pontos = 0
+      this.atualizaPontos()
+    }
   
   }
 
   class EsreverFimDeJogo{
     constructor(){
-      this.element = document.createElement("div");
-      this.texto = "Fim de Jogo!"
-      this.element.style.top = "40px";
-      this.element.style.left = "100%";
-      this.element.style.fontSize = "44px";
-      this.element.style.fontWeight = "bold";
-      this.element.style.zIndex = "10";
-      this.mostraTexto()
+    this.element = document.createElement("div");
+    this.element.setAttribute("id", "fimDeJogo");
+    this.element.style.top = "40px";
+    this.element.style.left = "50%";
+    this.element.style.fontSize = "44px";
+    this.element.style.fontWeight = "bold";
+    this.element.style.zIndex = "10";
+    this.element.style.display = "none"; // msg oculta durante o jogo
+    this.element.innerText = "Fim de Jogo!";
 
-      // Adiciona o elemento ao body
-      document.body.appendChild(this.element);
+    // Adiciona o elemento ao body
+    document.body.appendChild(this.element);
     }
     mostraTexto(){ 
-      this.element.innerText = this.texto
+      this.element.style.display = "block"
+    }
+
+    esconderTexto(){
+      this.element.style.display = "none"
     }
     
   }
@@ -209,6 +248,13 @@ function pausar() {
         }
       }
     }
+
+    clear() {
+      const cells = document.querySelectorAll("#board td");
+      cells.forEach(cell => {
+        cell.style.backgroundColor = this.color;
+      });
+    }
   }
 
   class Snake {
@@ -271,6 +317,14 @@ function pausar() {
       console.log("Como ta a cobrinha:" + this.body)
     }
 
+    reset () {
+      this.body = [[4, 4], [4, 5], [4, 6]] //posicão inicial da cobrinha
+      this.direction = 1
+      this.grow = false
+      this.body.forEach(field => document.querySelector(`#board tr:nth-child(${field[0]}) td:nth-child(${field[1]})`).style.backgroundColor = this.color);
+    
+    }
+
   }
       
   //a cobrinha encosta nela mesa
@@ -299,15 +353,22 @@ function pausar() {
       //Se a cobrinha comer um alimento
        // Se a cobrinha comer um alimento
     if (head[0] === alimento.food[0] && head[1] === alimento.food[1]) {
-      const pontos = cor === "preto" ? 1 : 2;
-      placar.somaPontos(pontos); // adiciona os pontos de acordo com a cor do alimento
-      snake.grow = true; // muda para a cobra crescer
-      alimento = new Alimento(snake); // cria novo alimento
+      const pontos = cor === "preto" ? 1 : 2; //tratamento para alimento preto ou vermelho
+      placar.somaPontos(pontos) 
+      snake.grow = true 
+      alimento = new Alimento(snake)
+      alimentosConsumidos++
+
+      //aumentar a velocidade a cada 3 alimentos
+      if(alimentosConsumidos % 3 == 0) {
+        FPS += 2
+        clearInterval(intervalo)
+        intervalo = setInterval(cobrinhaStuff, 1000 / FPS)
+      }
     }
       
       //Se a cobrinha bateu nela mesmo
       if(cobrinhaBateuNelaMesma()){
-        console.log("Perdeu pai")
         jogoPausado = true // so pra parar por enquando 
         fimDeJogo()
       }
