@@ -1,6 +1,8 @@
 const http = require('http')
 const fs  = require('fs')
-require ('dotenv').config()
+
+const dotenv = require("dotenv")
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
 
 const directory = process.argv[2]
 
