@@ -1,9 +1,11 @@
 const http = require('http')
 const fs  = require('fs')
+require ('dotenv').config()
 
 const directory = process.argv[2]
 
-
+//Tentar acessar essa porta caso
+const PORT = process.env.PORT ?? 8080
 
 
 const server = http.createServer(function(req,res){
@@ -22,4 +24,5 @@ const server = http.createServer(function(req,res){
     }) 
 
 });
-server.listen(3333);
+
+server.listen(PORT);
