@@ -11,8 +11,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/lorem-ipsum": "^2.0.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "lorem-ipsum": "^2.0.8",
     "morgan": "^1.10.0"
   },
   "devDependencies": {

@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import path, { format } from "path";
 import fs from "fs";
+import router from './router/router';
 
 dotenv.config();
 const PORT = process.env.PORT ?? 3333;
@@ -38,7 +39,11 @@ const logger = (format: LogFormat = 'simples') =>
   next();
 };
 
-app.use(logger('completo'));
+//middleware de logs
+app.use(logger('simples'))
+
+//middleware de rotas
+app.use(router)
 
 app.get('/', (req, res) => {
   res.send('Hello, world!');
