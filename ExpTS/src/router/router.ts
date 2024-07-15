@@ -1,5 +1,4 @@
 //Modelo de routas da aplicação!
-import { count } from 'console';
 import { Router } from 'express'
 import { loremIpsum } from 'lorem-ipsum';
 const router = Router()
@@ -20,5 +19,6 @@ router.get ('/lorem/:numParagrafos', (req, res) => {
     const paragrafo = loremIpsum({count: numParagrafos, units: 'paragraphs'}).replace(/\n/g, '<br><br>');
     res.send(paragrafo)
 })
+
 
 export default router
