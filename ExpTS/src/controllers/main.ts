@@ -7,17 +7,15 @@ const index = (req: Request, res: Response) => {
 
 const hb1 = (req: Request, res: Response) => {
     res.render('main/hb1', {
-        mensagem: 'Olá, você está aprendendo Express + HBS!',
-        layout: false,
+        mensagem: 'Olá, você está aprendendo Express + HBS!'
     })
 }
 
 const hb2 = (req: Request, res: Response) => {
     res.render('main/hb2', {
-        nome: 'React',
-        tipo: 'library',
-        poweredByNode: true,
-        layout: false,
+        name: 'React',
+        type: 'library',
+        poweredByNodejs: true
     })
 }
 
@@ -29,8 +27,7 @@ const hb3 = (req: Request, res: Response) => {
         { nome: 'Elaine Harada', sala: 1231 }
       ]
     res.render('main/hb3', {
-        profes,
-        layout:false
+        profes
     })
 }
 
@@ -46,8 +43,7 @@ const hb4 = (req: Request, res: Response) => {
         ];
     
     res.render('main/hb4', {
-    technologies,
-    layout:false
+    technologies
     })
 }
 

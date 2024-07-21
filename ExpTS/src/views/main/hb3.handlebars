@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>hb3</title>
-</head>
-<body>
-    <div class="container">
-        <p>Alguns professores do Icomp/UFAM </p>
-        <ul>
-            {{#each profes}}
-            <li>{{nome}} - sala {{sala}}</li>
-             {{/each}}
-        </ul>
-    </div>
-</body>
-</html>
+
+{{#each profes}}
+    <li>{{nome}} - sala {{sala}}</li>
+{{/each}}
