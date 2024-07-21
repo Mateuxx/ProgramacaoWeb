@@ -40,10 +40,44 @@ const logger = (format = 'simples') => (req, res, next) => {
     });
     next();
 };
+//HanldeBars - Exercicio 5 
 app.get('/hb1', (req, res) => {
     res.render('hb1', {
         mensagem: 'Olá, você está aprendendo Express + HBS!',
         layout: false,
+    });
+});
+app.get('/hb2', (req, res) => {
+    res.render('hb2', {
+        poweredByNodejs: true,
+        name: 'Express',
+        type: 'Framework',
+        layout: false,
+    });
+});
+app.get('/hb3', (req, res) => {
+    const profes = [
+        { nome: 'David Fernandes', sala: 1238 },
+        { nome: 'Horácio Fernandes', sala: 1233 },
+        { nome: 'Edleno Moura', sala: 1236 },
+        { nome: 'Elaine Harada', sala: 1231 }
+    ];
+    res.render('hb3', {
+        profes,
+        layout: false
+    });
+});
+//Exercicio 6
+app.get('/hb4', (req, res) => {
+    const profes = [
+        { nome: 'David Fernandes', sala: 1238 },
+        { nome: 'Horácio Fernandes', sala: 1233 },
+        { nome: 'Edleno Moura', sala: 1236 },
+        { nome: 'Elaine Harada', sala: 1231 },
+    ];
+    res.render('hb4', {
+        profes,
+        layout: false
     });
 });
 //middleware de logs
@@ -53,6 +87,10 @@ app.use(router_1.default);
 app.get('/', (req, res) => {
     res.send('Hello, world!');
 });
+//Helpers HandleBars 
+app.engine("handlebars", (0, express_handlebars_1.engine)({
+    helpers: require(`${__dirname}/views/helpers/helpers.ts`)
+}));
 //Conexão com a porta
 app.listen(PORT, () => {
     console.log(`Express app iniciada na porta ${PORT}.`);

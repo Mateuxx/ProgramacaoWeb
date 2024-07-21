@@ -48,7 +48,7 @@ const logger = (format: LogFormat = 'simples') =>
   next();
 };
 
-//HanldeBars
+//HanldeBars - Exercicio 5 
 app.get('/hb1', (req, res) => {
   res.render('hb1', {
     mensagem: 'Olá, você está aprendendo Express + HBS!',
@@ -78,6 +78,26 @@ app.get('/hb3', (req, res) => {
   })
 })
 
+
+//Exercicio 6
+app.get('/hb4', (req, res) => {
+  
+  const technologies = [
+    { name: 'Express', type: 'Framework', poweredByNodejs: true },
+    { name: 'Laravel', type: 'Framework', poweredByNodejs: false },
+    { name: 'React', type: 'Library', poweredByNodejs: true },
+    { name: 'Handlebars', type: 'Engine View', poweredByNodejs: true },
+    { name: 'Django', type: 'Framework', poweredByNodejs: false },
+    { name: 'Docker', type: 'Virtualization', poweredByNodejs: false },
+    { name: 'Sequelize', type: 'ORM tool', poweredByNodejs: true },
+    ];
+
+    res.render('hb4', {
+      technologies,
+      layout:false
+    })
+})
+
 //middleware de logs
 app.use(logger('simples'))
 
@@ -87,7 +107,11 @@ app.use(router)
 app.get('/', (req, res) => {
   res.send('Hello, world!');
 });
-  
+
+//Helpers HandleBars 
+app.engine("handlebars", engine({
+  helpers: require(`${__dirname}/views/helpers/helpers.ts`)
+}))
 
 
 //Conexão com a porta
