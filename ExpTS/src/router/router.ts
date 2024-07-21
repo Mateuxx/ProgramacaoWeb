@@ -1,24 +1,14 @@
 //Modelo de routas da aplicação!
 import { Router } from 'express'
 import { loremIpsum } from 'lorem-ipsum';
+import mainController from '../controllers/main'
+
 const router = Router()
 
-//Pagina inical 
-router.get('/', (req, res) =>{
-    res.send('Página principal do site')
-})
-
-//Pagina sobre
-router.get('/sobre', (req, res) => {
-    res.send('Página Sobre')
-})
-
-//Página lorem - Exercicio 4
-router.get ('/lorem/:numParagrafos', (req, res) => {
-    const numParagrafos = parseInt(req.params.numParagrafos, 10)
-    const paragrafo = loremIpsum({count: numParagrafos, units: 'paragraphs'}).replace(/\n/g, '<br><br>');
-    res.send(paragrafo)
-})
-
+//From Main Controller
+router.get("/", mainController.index)
+router.get("/hb1", mainController.hb1)
+router.get("/hb3", mainController.hb3)
+router.get("/hb4", mainController.hb4)
 
 export default router
