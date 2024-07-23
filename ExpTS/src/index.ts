@@ -27,6 +27,7 @@ if (!fs.existsSync(logFolder)) {
 
 type LogFormat = 'simples' | 'completo';
 
+//Middleware
 const logger = (format: LogFormat = 'simples') =>
     (req: Request, res: Response, next: NextFunction) => {
   const timestamp = new Date().toISOString();
