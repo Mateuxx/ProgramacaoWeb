@@ -52,6 +52,9 @@ const logger = (format: LogFormat = 'simples') =>
 //middleware de logs
 app.use(logger('simples'))
 
+//Middleware para formatar a requisição do body da API de forma mais limpa
+app.use(express.urlencoded( { extended: false }))
+
 //middleware de rotas
 app.use(router)
 
