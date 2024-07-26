@@ -18,3 +18,20 @@ export const getMajors = async(): Promise<Major[]> => {
 export const getMajor = async(id: string): Promise<Major | null> => {
     return prisma.major.findUnique({ where: { id } }) 
 } 
+
+//deletar um curso
+export const deleteMajor = async(id: string): Promise<Major> => {
+    return prisma.major.delete({where: {id}})
+}
+
+//update infos do curso que ja está no DB
+export const updateMajor = async (id: number, major: CreateMajorDto): Promise<Major> => {
+    return prisma.major.update({
+      where: { id: id.toString() }, // Convert the id to a string
+      data: {
+        code: major.code,
+        name: major.name,
+        description: major.description,
+      },
+    });
+  };

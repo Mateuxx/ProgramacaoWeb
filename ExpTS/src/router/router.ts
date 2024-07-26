@@ -24,6 +24,8 @@ router.post("/major/update/:id", majorController.create) //salvar os dados do fo
 router.get("/major/update/:id", majorController.update) // Retorna um forms
 router.post("major/update/:id", majorController.update) //processar os dados vindo do forms
 router.post("/major/remove/:id", majorController.remove) // remover (POST)
+router.get("/major/update/:id", majorController.update)
+router.post("/major/update/:id", majorController.update)
 
 //From Main Controller
 router.get("/", mainController.index)

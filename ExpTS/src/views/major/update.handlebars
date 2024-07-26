@@ -1,0 +1,18 @@
+<h3>Editar Informações do curso</h3>
+<div class="container">
+        <form action="/major/update/{{major.id}}" method="post">
+     <div class="form-group">
+        <label for="code">Sigla:</label>
+        <input type="text" class="form-control" id="code" name="code" value="{{major.code}}" required>
+    </div>
+    <div class="form-group">
+        <label for="name">Nome:</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{major.name}}" required>
+    </div>
+    <div class="form-group">
+        <label for="description">Descrição:</label>
+        <textarea class="form-control" id="description" name="description" required>{{major.description}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Atualizar</button>
+</form>
+</div>

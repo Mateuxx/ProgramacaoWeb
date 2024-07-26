@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { createMajor, getMajors, getMajor } from "../services/major"
+import { createMajor, getMajors, getMajor, deleteMajor, updateMajor } from "../services/major"
+import { constrainedMemory } from "process";
 
 //Pagina de listagem de cursos ja cadastrados
 const index = async (req:Request, res: Response) => {
@@ -45,8 +46,43 @@ const read = async (req: Request, res: Response) => {
 }
 
 
-const update  = async (req:Request, res: Response) => {}
-const remove = async (req:Request, res: Response) => {}
+const update = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    if (req.method === "GET") {
+        try {
+            const major = await getMajor(id);
+            if (!major) {
+                return res.status(404).send("Curso não encontrado");
+            }
+            res.render("major/update", { major });
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Erro ao recuperar o curso");
+        }
+    } else if (req.method === "POST") {
+        try {
+            const updatedMajor = req.body;
+            await updateMajor(Number(id), updatedMajor); // Convert id to a number
+            console.log("Curso Atualizado!");
+            res.redirect(`/major/${id}`);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+};
+
+const remove = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        await deleteMajor(id);
+        console.log("Curso Deletado!");
+        res.redirect("/major");
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err); // Indica que aconteceu um erro no servidor
+    }
+};
 
 export default { index, create, read, update, remove } 
 

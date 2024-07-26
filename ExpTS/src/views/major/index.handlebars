@@ -16,7 +16,9 @@
           <td  style="text-align: right;"> 
             <a href="/major/read/{{id}}" class="btn btn-primary"> Ver</a>
             <a href="/major/update/{{id}}" class="btn btn-warning"> Editar</a>
-            <a href="/major/remover/{{id}}" class="btn btn-danger"> Remover</a>
+            <form action="/major/remove/{{id}}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Remover</button>
+          </form>
           </td>
         </tr>   
       {{/each}}
