@@ -48,4 +48,15 @@ const hb4 = (req: Request, res: Response) => {
 }
 
 
-export default {index, hb1, hb2, hb3, hb4}
+const testCookie = function (req: Request, res: Response) {
+    if (!('nomeCookie' in req.cookies)) {
+    res.cookie('nomeCookie', 'valorCookie');
+    res.send('Você NUNCA passou por aqui!');
+    } else {
+    res.send('Você JÁ passou por aqui');
+    }
+}
+
+
+
+export default {index, hb1, hb2, hb3, hb4, testCookie}

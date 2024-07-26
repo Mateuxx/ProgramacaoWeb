@@ -1,11 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 import express from 'express';
-import morgan from 'morgan';
 import dotenv from 'dotenv';
 import path, { format } from "path";
 import fs from "fs";
 import router from './router/router';
 import { engine } from 'express-handlebars'
+import cookieParser from 'cookie-parser';
+import session from "express-session"
+import {v4 } from "uuid"
+
+declare module "express-session" {
+  interface SessionData {
+    uid: string
+  }
+}
+
 
 dotenv.config();
 const PORT = process.env.PORT ?? 3333;
@@ -55,12 +64,23 @@ app.use(logger('simples'))
 //Middleware para formatar a requisição do body da API de forma mais limpa
 app.use(express.urlencoded( { extended: false }))
 
+//Middleware para cookies -> return a  middleware
+app.use(cookieParser())
+
+//Middleware de session
+app.use(session({
+  genid: () => v4(),
+  secret: "MASKWOWQW##QW2sakda@",
+  saveUninitialized: true,
+  resave: true,
+  cookie: { maxAge: 360000 }
+}))
+
 //middleware de rotas
 app.use(router)
 
-// app.get('/', (req, res) => {
-//   res.send('Hello, world!');
-// });
+
+
 
 //Helpers HandleBars 
 app.engine("handlebars", engine({

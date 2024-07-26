@@ -17,4 +17,4 @@ export const getMajors = async(): Promise<Major[]> => {
 //Retorna o major que contem essa id especifico passado como parametro
 export const getMajor = async(id: string): Promise<Major | null> => {
     return prisma.major.findUnique({ where: { id } }) 
-}
+} 

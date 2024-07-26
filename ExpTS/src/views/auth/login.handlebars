@@ -1,0 +1,32 @@
+<h3>Login de Usuário</h3>
+
+<div class="col-6">
+
+  <form action="/auth/login" method="post">
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="text" class="form-control" id="email" name="email">
+    </div>
+
+     <div class="mb-3">
+      <label for="password" class="form-label">Senha</label>
+      <input type="password" class="form-control" id="password" name="password">
+    </div>
+
+    {{!-- Submit button  --}}
+    <button type="submit" class="btn btn-primary">
+        Enviar
+    </button>
+  </form>
+
+</div>
+
+<script>
+    const signup = document.getElementById("signup")
+    signup.addEventListener("submit", (e) =>  {
+        const password = document.getElementById("password").value
+        const repeatPassword = document.getElementById("repeat-password").value 
+        if(!password || password !=== repeatPassword)e.preventDefault()
+    })
+</script>

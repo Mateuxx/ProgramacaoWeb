@@ -22,7 +22,7 @@ const create = async (req:Request, res: Response) => {
             console.log(req.body); // Ver o valor da nossa requisicao
             await createMajor(req.body)
             console.log("Curso Criado!")
-            res.send("criado")
+            res.redirect("/major")
         } catch(err) {
             console.log(err)
             res.status(500).send(err) //Indica que aconteceu um erro no servidor
